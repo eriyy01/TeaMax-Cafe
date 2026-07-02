@@ -17,6 +17,7 @@ const { description = "Experience the finest coffee, tea, and comfort food in Bi
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <base href={Astro.site?.pathname ?? "/"} />
+    <meta name="theme-color" content="#121212" />
     <title>{title}</title>
     <meta name="description" content={description} />
 
@@ -31,6 +32,7 @@ const { description = "Experience the finest coffee, tea, and comfort food in Bi
     <meta name="twitter:description" content={description} />
 
     <link rel="canonical" href={siteUrl} />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

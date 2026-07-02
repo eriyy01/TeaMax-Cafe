@@ -39,8 +39,7 @@ const { name, description, price, image, category, signature } = Astro.props;
     <div class="flex items-center justify-between">
       <span class="text-gold font-semibold text-lg">{price}</span>
       <button
-        class="text-xs text-cream/50 hover:text-gold transition-colors focus:outline-none focus:ring-2 focus:ring-gold/50 rounded px-2 py-1"
-        onclick="alert('Order feature coming soon!')"
+        class="order-btn text-xs text-cream/50 hover:text-gold transition-colors focus:outline-none focus:ring-2 focus:ring-gold/50 rounded px-2 py-1"
         aria-label={`Order ${name}`}
       >
         Order Now

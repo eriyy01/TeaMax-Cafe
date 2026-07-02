@@ -182,7 +182,7 @@
     .btn-outline:hover { transform: none; }
     .reveal, .reveal-left, .reveal-right, .reveal-scale { opacity: 1; transform: none; transition: none; }
   }
-  section { content-visibility: auto; contain-intrinsic-size: 500px; }
+  section { content-visibility: auto; contain-intrinsic-size: 500px; scroll-margin-top: 5rem; }
   #home, #preloader, nav { content-visibility: visible; contain-intrinsic-size: none; }
   img { content-visibility: auto; }
   img[loading="eager"] { content-visibility: visible; }
