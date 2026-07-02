@@ -4,6 +4,8 @@ import critters from 'astro-critters';
 import compress from '@playform/compress';
 
 export default defineConfig({
+  site: "https://eriyy01.github.io",
+  base: "/TeaMax-Cafe",
   vite: {
     plugins: [tailwindcss()]
   },

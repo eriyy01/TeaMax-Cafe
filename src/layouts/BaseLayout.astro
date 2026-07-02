@@ -6,6 +6,7 @@ export interface Props {
   description?: string;
 }
 
+const siteUrl = Astro.site?.origin ?? "https://teamaxcafe.com";
 const { title = "TeaMax Cafe Bilaspur — Where Every Sip Becomes a Memory" } = Astro.props;
 const { description = "Experience the finest coffee, tea, and comfort food in Bilaspur. Premium café with warm ambience, perfect for friends, dates, and work sessions." } = Astro.props;
 ---
@@ -15,20 +16,21 @@ const { description = "Experience the finest coffee, tea, and comfort food in Bi
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href={Astro.site?.pathname ?? "/"} />
     <title>{title}</title>
     <meta name="description" content={description} />
 
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://teamaxcafe.com" />
-    <meta property="og:image" content="https://teamaxcafe.com/images/og-image.jpg" />
+    <meta property="og:url" content={siteUrl} />
+    <meta property="og:image" content={`${siteUrl}/images/og-image.jpg`} />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
 
-    <link rel="canonical" href="https://teamaxcafe.com" />
+    <link rel="canonical" href={siteUrl} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -56,14 +58,14 @@ const { description = "Experience the finest coffee, tea, and comfort food in Bi
       }
     </style>
 
-    <link rel="preload" as="image" href="/images/hero-bg.jpg" fetchpriority="high" />
+    <link rel="preload" as="image" href="images/hero-bg.jpg" fetchpriority="high" />
 
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "CafeOrCoffeeShop",
       "name": "TeaMax Cafe Bilaspur",
-      "image": "https://teamaxcafe.com/images/og-image.jpg",
-      "url": "https://teamaxcafe.com",
+      "image": `${siteUrl}/images/og-image.jpg`,
+      "url": siteUrl,
       "telephone": "+917047505158",
       "address": {
         "@type": "PostalAddress",
