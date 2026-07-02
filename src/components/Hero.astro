@@ -3,40 +3,45 @@ import ScrollIndicator from "./ScrollIndicator.astro";
 ---
 
 <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden">
-  <div class="absolute inset-0 bg-gradient-to-b from-warm-black/40 via-warm-black/20 to-warm-black z-10"></div>
+  <div class="absolute inset-0 bg-gradient-to-b from-warm-black/50 via-warm-black/30 to-warm-black z-10"></div>
 
-  <div class="absolute inset-0 z-0" data-parallax="0.3">
-    <img
-      src="images/hero-bg.jpg"
-      alt=""
-      class="w-full h-full object-cover"
-      width="1920"
-      height="1080"
-      loading="eager"
-      decoding="async"
-      aria-hidden="true"
-    />
+  <div class="absolute inset-0 z-0 hero-ken-burns" data-parallax="0.2">
+    <picture>
+      <source srcset="images/bilaspur-scenery.jpg" media="(min-width: 768px)" />
+      <img
+        src="images/hero-bg.jpg"
+        alt=""
+        class="w-full h-full object-cover"
+        width="1920"
+        height="1080"
+        loading="eager"
+        decoding="async"
+        aria-hidden="true"
+      />
+    </picture>
   </div>
+
+  <div class="absolute inset-0 z-[1] bg-gradient-to-t from-warm-black/60 via-transparent to-transparent"></div>
 
   <div class="relative z-20 text-center px-4 max-w-5xl mx-auto">
     <p class="section-label reveal">TeaMax Cafe Bilaspur</p>
 
-    <h1 class="font-heading text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-cream leading-tight mb-6 reveal" style="transition-delay: 0.1s">
+    <h1 class="font-heading text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold text-cream leading-tight mb-4 md:mb-6 reveal" style="transition-delay: 0.1s">
       Where Every Sip
       <br />
       <span class="text-gradient">Becomes a Memory</span>
     </h1>
 
-    <p class="text-lg md:text-xl text-muted max-w-2xl mx-auto mb-10 leading-relaxed reveal" style="transition-delay: 0.2s">
+    <p class="text-base sm:text-lg md:text-xl text-muted max-w-2xl mx-auto mb-8 md:mb-10 leading-relaxed reveal" style="transition-delay: 0.2s">
       Bilaspur's favourite tea destination — where every cup is brewed with love,
       <br class="hidden sm:block" />
       every dish is made fresh, and every guest feels at home.
     </p>
 
-    <div class="flex flex-wrap justify-center gap-4 reveal" style="transition-delay: 0.3s">
-      <a href="#menu" class="btn-primary min-w-[160px]">Explore Menu</a>
-      <a href="#visit" class="btn-outline min-w-[140px]">Visit Us</a>
-      <button class="btn-outline min-w-[160px]" onclick="alert('Reservation feature coming soon!')" aria-label="Reserve a table">Reserve Table</button>
+    <div class="flex flex-wrap justify-center gap-3 md:gap-4 reveal" style="transition-delay: 0.3s">
+      <a href="#menu" class="btn-primary min-w-[140px] md:min-w-[160px] text-sm md:text-base">Explore Menu</a>
+      <a href="#visit" class="btn-outline min-w-[120px] md:min-w-[140px] text-sm md:text-base">Visit Us</a>
+      <button id="reserve-btn" class="btn-outline min-w-[140px] md:min-w-[160px] text-sm md:text-base" aria-label="Reserve a table">Reserve Table</button>
     </div>
   </div>
 

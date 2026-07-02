@@ -40,11 +40,18 @@ import Footer from "../components/Footer.astro";
 
     gsap.registerPlugin(ScrollTrigger);
 
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
     let testimonialInterval = null;
 
     async function initLoader() {
       const loader = document.getElementById("preloader");
       if (!loader) return;
+
+      if (prefersReducedMotion) {
+        loader.style.display = "none";
+        return;
+      }
 
       const tl = gsap.timeline({
         onComplete: () => {
@@ -76,6 +83,8 @@ import Footer from "../components/Footer.astro";
     }
 
     function initSmoothScroll() {
+      if (prefersReducedMotion) return;
+
       const lenis = new Lenis({
         duration: 1.2,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -102,6 +111,7 @@ import Footer from "../components/Footer.astro";
     }
 
     function initParallax() {
+      if (prefersReducedMotion) return;
       document.querySelectorAll("[data-parallax]").forEach((el) => {
         const speed = parseFloat(el.getAttribute("data-parallax") || "0.3");
         gsap.to(el, {
@@ -259,6 +269,7 @@ import Footer from "../components/Footer.astro";
     }
 
     function initScrollReveals() {
+      if (prefersReducedMotion) return;
       document.querySelectorAll(".reveal, .reveal-left, .reveal-right, .reveal-scale").forEach((el) => {
         const config = { opacity: 0, duration: 0.8, ease: "power2.out" };
         if (el.classList.contains("reveal-left")) config.x = -40;
@@ -280,6 +291,11 @@ import Footer from "../components/Footer.astro";
 
     document.addEventListener("DOMContentLoaded", async () => {
       await initLoader();
+
+      document.getElementById("reserve-btn")?.addEventListener("click", () => {
+        alert("Reservation feature coming soon! Call us at +91 7047505158 to book.");
+      });
+
       initSmoothScroll();
       initNavScroll();
       initScrollIndicator();
