@@ -10,22 +10,27 @@ const links = [
 ];
 ---
 
-<nav class="fixed top-0 left-0 right-0 z-40 transition-all duration-500" id="navbar" aria-label="Main navigation">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between h-20">
+<nav class="fixed top-0 left-0 right-0 z-40 transition-all duration-700" id="navbar" aria-label="Main navigation">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+    <div id="nav-pill" class="flex items-center justify-between px-6 py-3 rounded-full transition-all duration-700 mx-auto max-w-5xl">
       <a href="#home" class="font-heading text-2xl font-bold text-gradient focus:outline-none focus:ring-2 focus:ring-gold/50 rounded">TeaMax</a>
 
-      <div class="hidden md:flex items-center gap-8">
+      <div class="hidden md:flex items-center gap-1">
         {links.map((link) => (
           <a
             href={link.href}
-            class="relative text-sm font-medium text-cream/70 hover:text-gold transition-colors duration-300 after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-gold after:transition-all after:duration-300 hover:after:w-full focus:outline-none focus:after:w-full focus:text-gold"
+            class="relative text-sm font-medium text-cream/70 hover:text-gold px-4 py-2 rounded-full hover:bg-white/5 transition-all duration-400 after:absolute after:bottom-[-2px] after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-[2px] after:bg-gold after:rounded-full after:transition-all after:duration-400 hover:after:w-[60%] focus:outline-none focus:after:w-[60%] focus:text-gold"
             aria-current="section"
           >
             {link.label}
           </a>
         ))}
       </div>
+
+      <a href="tel:+917047505158" class="hidden md:inline-flex items-center gap-2 text-xs font-semibold text-warm-black bg-gradient-to-r from-gold to-gold-dark px-5 py-2.5 rounded-full hover:shadow-[0_0_24px_rgba(201,168,76,0.3)] transition-all duration-400 active:scale-[0.97]">
+        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+        Call Now
+      </a>
 
       <button
         id="menu-toggle"
@@ -34,35 +39,65 @@ const links = [
         aria-expanded="false"
         aria-controls="mobile-menu"
       >
-        <span class="block w-6 h-[2px] bg-cream transition-transform duration-300 origin-center"></span>
-        <span class="block w-6 h-[2px] bg-cream transition-opacity duration-300"></span>
-        <span class="block w-6 h-[2px] bg-cream transition-transform duration-300 origin-center"></span>
+        <span class="ham-line ham-top block w-6 h-[2px] bg-cream transition-all duration-500 origin-center"></span>
+        <span class="ham-line ham-mid block w-6 h-[2px] bg-cream transition-all duration-500"></span>
+        <span class="ham-line ham-bot block w-6 h-[2px] bg-cream transition-all duration-500 origin-center"></span>
       </button>
     </div>
   </div>
 
-  <div id="mobile-menu" class="md:hidden fixed inset-0 top-0 z-50 bg-warm-black/95 backdrop-blur-xl flex flex-col items-center justify-center gap-8 translate-x-full transition-transform duration-500" role="navigation" aria-label="Mobile navigation">
-    <button id="menu-close" class="absolute top-6 right-6 w-10 h-10 rounded-full glass flex items-center justify-center text-cream hover:text-gold transition-colors focus:outline-none focus:ring-2 focus:ring-gold/50" aria-label="Close menu">
-      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+  <div id="mobile-menu" class="md:hidden fixed inset-0 top-0 z-50 bg-warm-black/98 backdrop-blur-3xl flex flex-col items-center justify-center gap-8 translate-x-full transition-transform duration-700" style="transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);" role="navigation" aria-label="Mobile navigation">
+    <button id="menu-close" class="absolute top-6 right-6 w-12 h-12 rounded-full glass flex items-center justify-center text-cream hover:text-gold transition-all duration-400 focus:outline-none focus:ring-2 focus:ring-gold/50" aria-label="Close menu">
+      <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/></svg>
     </button>
-    {links.map((link) => (
-      <a href={link.href} class="text-2xl font-heading text-cream hover:text-gold transition-colors focus:outline-none focus:ring-2 focus:ring-gold/50 rounded">{link.label}</a>
-    ))}
+    <div class="flex flex-col items-center gap-2">
+      {links.map((link, i) => (
+        <a href={link.href} class="nav-link text-3xl font-heading text-cream/80 hover:text-gold transition-all duration-500 focus:outline-none focus:ring-2 focus:ring-gold/50 rounded px-6 py-2 hover:bg-white/5" style={`transition-delay:${0.1 + i * 0.06}s`}>{link.label}</a>
+      ))}
+    </div>
+    <a href="tel:+917047505158" class="nav-link btn-primary text-sm mt-4" style="transition-delay:0.6s">
+      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+      Call Now
+    </a>
   </div>
 </nav>
 
 <style is:global>
-  nav.nav-scrolled {
-    background: rgba(18, 18, 18, 0.92);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  #nav-pill {
+    background: transparent;
+    border: 1px solid transparent;
   }
-  @supports not (backdrop-filter: blur(20px)) {
-    nav.nav-scrolled { background: rgba(18, 18, 18, 0.98); }
+  #nav-pill.scrolled {
+    background: rgba(18, 18, 18, 0.85);
+    backdrop-filter: blur(24px) saturate(1.5);
+    -webkit-backdrop-filter: blur(24px) saturate(1.5);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+  @supports not (backdrop-filter: blur(24px)) {
+    #nav-pill.scrolled { background: rgba(18, 18, 18, 0.96); }
   }
   #mobile-menu.open {
     transform: translateX(0);
+  }
+  #mobile-menu .nav-link {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s var(--ease-out-expo), transform 0.7s var(--ease-out-expo);
+  }
+  #mobile-menu.open .nav-link {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  #menu-toggle.active .ham-top {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  #menu-toggle.active .ham-mid {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  #menu-toggle.active .ham-bot {
+    transform: rotate(-45deg) translate(5px, -5px);
   }
   @media (max-width: 380px) {
     #mobile-menu a { font-size: 1.5rem; }
@@ -74,16 +109,19 @@ const links = [
     const toggle = document.getElementById("menu-toggle");
     const close = document.getElementById("menu-close");
     const menu = document.getElementById("mobile-menu");
-    if (!toggle || !close || !menu) return;
+    const pill = document.getElementById("nav-pill");
+    if (!toggle || !close || !menu || !pill) return;
 
     function closeMenu() {
       menu.classList.remove("open");
+      toggle.classList.remove("active");
       toggle.setAttribute("aria-expanded", "false");
       document.body.style.overflow = "";
     }
 
     function openMenu() {
       menu.classList.add("open");
+      toggle.classList.add("active");
       toggle.setAttribute("aria-expanded", "true");
       document.body.style.overflow = "hidden";
       setTimeout(() => close.focus(), 100);
@@ -101,6 +139,10 @@ const links = [
 
     menu.querySelectorAll("a").forEach((a) => {
       a.addEventListener("click", closeMenu);
+    });
+
+    window.addEventListener("scroll", () => {
+      pill.classList.toggle("scrolled", window.scrollY > 50);
     });
   })();
 </script>
