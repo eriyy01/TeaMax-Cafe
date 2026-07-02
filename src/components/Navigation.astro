@@ -1,0 +1,100 @@
+---
+const links = [
+  { href: "#home", label: "Home" },
+  { href: "#about", label: "About" },
+  { href: "#menu", label: "Menu" },
+  { href: "#gallery", label: "Gallery" },
+  { href: "#reviews", label: "Reviews" },
+  { href: "#visit", label: "Visit" },
+  { href: "#contact", label: "Contact" },
+];
+---
+
+<nav class="fixed top-0 left-0 right-0 z-40 transition-all duration-500" id="navbar" aria-label="Main navigation">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-20">
+      <a href="#home" class="font-heading text-2xl font-bold text-gradient focus:outline-none focus:ring-2 focus:ring-gold/50 rounded">TeaMax</a>
+
+      <div class="hidden md:flex items-center gap-8">
+        {links.map((link) => (
+          <a
+            href={link.href}
+            class="relative text-sm font-medium text-cream/70 hover:text-gold transition-colors duration-300 after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-gold after:transition-all after:duration-300 hover:after:w-full focus:outline-none focus:after:w-full focus:text-gold"
+            aria-current="section"
+          >
+            {link.label}
+          </a>
+        ))}
+      </div>
+
+      <button
+        id="menu-toggle"
+        class="md:hidden flex flex-col gap-1.5 p-2 focus:outline-none focus:ring-2 focus:ring-gold/50 rounded relative z-[60]"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <span class="block w-6 h-[2px] bg-cream transition-transform duration-300 origin-center"></span>
+        <span class="block w-6 h-[2px] bg-cream transition-opacity duration-300"></span>
+        <span class="block w-6 h-[2px] bg-cream transition-transform duration-300 origin-center"></span>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-menu" class="md:hidden fixed inset-0 top-0 z-50 bg-warm-black/95 backdrop-blur-xl flex flex-col items-center justify-center gap-8 translate-x-full transition-transform duration-500" aria-label="Mobile navigation" role="dialog" aria-modal="true">
+    <button id="menu-close" class="absolute top-6 right-6 w-10 h-10 rounded-full glass flex items-center justify-center text-cream hover:text-gold transition-colors focus:outline-none focus:ring-2 focus:ring-gold/50" aria-label="Close menu">
+      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+    {links.map((link) => (
+      <a href={link.href} class="text-2xl font-heading text-cream hover:text-gold transition-colors focus:outline-none focus:ring-2 focus:ring-gold/50 rounded">{link.label}</a>
+    ))}
+  </div>
+</nav>
+
+<style is:global>
+  nav.nav-scrolled {
+    background: rgba(18, 18, 18, 0.9);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  }
+  #mobile-menu.open {
+    transform: translateX(0);
+  }
+</style>
+
+<script>
+  (function() {
+    const toggle = document.getElementById("menu-toggle");
+    const close = document.getElementById("menu-close");
+    const menu = document.getElementById("mobile-menu");
+    if (!toggle || !close || !menu) return;
+
+    function closeMenu() {
+      menu.classList.remove("open");
+      toggle.setAttribute("aria-expanded", "false");
+      document.body.style.overflow = "";
+    }
+
+    function openMenu() {
+      menu.classList.add("open");
+      toggle.setAttribute("aria-expanded", "true");
+      document.body.style.overflow = "hidden";
+      setTimeout(() => close.focus(), 100);
+    }
+
+    toggle.addEventListener("click", () => {
+      menu.classList.contains("open") ? closeMenu() : openMenu();
+    });
+
+    close.addEventListener("click", closeMenu);
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && menu.classList.contains("open")) closeMenu();
+    });
+
+    menu.querySelectorAll("a").forEach((a) => {
+      a.addEventListener("click", closeMenu);
+    });
+  })();
+</script>

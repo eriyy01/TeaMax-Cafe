@@ -1,0 +1,294 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Loader from "../components/Loader.astro";
+import Navigation from "../components/Navigation.astro";
+import Hero from "../components/Hero.astro";
+import About from "../components/About.astro";
+import Menu from "../components/Menu.astro";
+import Gallery from "../components/Gallery.astro";
+import Reviews from "../components/Reviews.astro";
+import Experience from "../components/Experience.astro";
+import InstagramFeed from "../components/InstagramFeed.astro";
+import Visit from "../components/Visit.astro";
+import Contact from "../components/Contact.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<BaseLayout>
+  <Loader />
+
+  <Navigation />
+
+  <main>
+    <Hero />
+    <About />
+    <Menu />
+    <Gallery />
+    <Reviews />
+    <Experience />
+    <InstagramFeed />
+    <Visit />
+    <Contact />
+  </main>
+
+  <Footer />
+
+  <script>
+    import gsap from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+    import Lenis from "lenis";
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    let testimonialInterval = null;
+
+    async function initLoader() {
+      const loader = document.getElementById("preloader");
+      if (!loader) return;
+
+      const tl = gsap.timeline({
+        onComplete: () => {
+          gsap.to(loader, {
+            opacity: 0,
+            duration: 0.6,
+            ease: "power2.inOut",
+            onComplete: () => { loader.style.display = "none"; },
+          });
+        },
+      });
+
+      tl.fromTo(
+        ".loader-particle",
+        { opacity: 0, y: 30, scale: 0.5 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.8, stagger: 0.1, ease: "power2.out" }
+      )
+      .fromTo(
+        ".loader-logo",
+        { opacity: 0, scale: 0.8, filter: "blur(10px)" },
+        { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.8, ease: "power3.out" }
+      )
+      .fromTo(
+        ".loader-text",
+        { opacity: 0, y: 15 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
+      )
+      .to(loader, { duration: 1.5 }, "+=1");
+    }
+
+    function initSmoothScroll() {
+      const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: "vertical",
+        smoothWheel: true,
+      });
+
+      gsap.ticker.add((time) => lenis.raf(time * 1000));
+      gsap.ticker.lagSmoothing(0);
+    }
+
+    function initNavScroll() {
+      const nav = document.querySelector("nav");
+      if (!nav) return;
+      window.addEventListener("scroll", () => {
+        nav.classList.toggle("nav-scrolled", window.scrollY > 80);
+      });
+    }
+
+    function initScrollIndicator() {
+      const el = document.querySelector(".scroll-indicator");
+      if (!el) return;
+      gsap.to(el, { y: 8, opacity: 0.5, duration: 1.2, repeat: -1, yoyo: true, ease: "power1.inOut" });
+    }
+
+    function initParallax() {
+      document.querySelectorAll("[data-parallax]").forEach((el) => {
+        const speed = parseFloat(el.getAttribute("data-parallax") || "0.3");
+        gsap.to(el, {
+          y: () => (window.innerHeight * speed) / 2,
+          ease: "none",
+          scrollTrigger: {
+            trigger: el,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
+      });
+    }
+
+    function initStatsCounter() {
+      document.querySelectorAll(".stat-number").forEach((stat) => {
+        const target = parseInt(stat.getAttribute("data-target") || "0", 10);
+        const step = target > 1000 ? Math.ceil(target / 60) : 1;
+        gsap.fromTo(
+          stat,
+          { innerText: 0 },
+          {
+            innerText: target,
+            duration: 1.5,
+            ease: "power2.out",
+            snap: { innerText: step },
+            scrollTrigger: { trigger: stat, start: "top 80%" },
+          }
+        );
+      });
+    }
+
+    function initMenuFilter() {
+      const tabs = document.querySelectorAll(".menu-tab");
+      const items = document.querySelectorAll(".menu-item");
+
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          tabs.forEach((t) => { t.classList.remove("active"); t.setAttribute("aria-selected", "false"); });
+          tab.classList.add("active");
+          tab.setAttribute("aria-selected", "true");
+          const filter = tab.getAttribute("data-filter");
+
+          items.forEach((item) => {
+            const match = filter === "all" || item.getAttribute("data-category") === filter;
+            if (match) {
+              item.style.display = "";
+              gsap.set(item, { opacity: 0, scale: 0.95 });
+              gsap.to(item, { opacity: 1, scale: 1, duration: 0.4, ease: "power2.out", clearProps: "opacity,scale" });
+            } else {
+              gsap.to(item, {
+                opacity: 0,
+                scale: 0.9,
+                duration: 0.25,
+                ease: "power2.in",
+                onComplete: () => { item.style.display = "none"; gsap.set(item, { clearProps: "opacity,scale" }); },
+              });
+            }
+          });
+        });
+      });
+    }
+
+    function initTestimonialSlider() {
+      const track = document.querySelector(".testimonial-track");
+      const cards = track?.querySelectorAll(".testimonial-card");
+      const container = track?.closest(".relative");
+      if (!track || !cards?.length) return;
+
+      let current = 0;
+      let interval = null;
+
+      function goTo(i) {
+        current = (i + cards.length) % cards.length;
+        gsap.to(track, { x: `${-current * 100}%`, duration: 0.6, ease: "power2.out" });
+      }
+
+      function startInterval() {
+        stopInterval();
+        interval = setInterval(() => goTo(current + 1), 5000);
+      }
+
+      function stopInterval() {
+        if (interval) { clearInterval(interval); interval = null; }
+      }
+
+      function resetInterval() { startInterval(); }
+
+      startInterval();
+
+      if (container) {
+        container.addEventListener("mouseenter", stopInterval);
+        container.addEventListener("mouseleave", startInterval);
+        container.addEventListener("focusin", stopInterval);
+        container.addEventListener("focusout", startInterval);
+      }
+
+      document.querySelector(".testimonial-prev")?.addEventListener("click", () => { goTo(current - 1); resetInterval(); });
+      document.querySelector(".testimonial-next")?.addEventListener("click", () => { goTo(current + 1); resetInterval(); });
+    }
+
+    function initGallery() {
+      document.querySelectorAll(".gallery-item").forEach((item) => {
+        item.setAttribute("tabindex", "0");
+        item.addEventListener("mouseenter", () => {
+          gsap.to(item.querySelector("img"), { scale: 1.08, duration: 0.5, ease: "power2.out" });
+        });
+        item.addEventListener("mouseleave", () => {
+          gsap.to(item.querySelector("img"), { scale: 1, duration: 0.5, ease: "power2.out" });
+        });
+
+        item.addEventListener("click", function() {
+          const img = item.querySelector("img");
+          if (!img) return;
+
+          const overlay = document.createElement("div");
+          overlay.className = "fixed inset-0 z-50 bg-black/90 flex items-center justify-center cursor-pointer";
+          overlay.setAttribute("role", "dialog");
+          overlay.setAttribute("aria-modal", "true");
+          overlay.setAttribute("aria-label", img.alt || "Photo");
+
+          const closeBtn = document.createElement("button");
+          closeBtn.className = "absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors focus:outline-none focus:ring-2 focus:ring-gold";
+          closeBtn.innerHTML = '<svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>';
+          closeBtn.setAttribute("aria-label", "Close");
+
+          const overlayImg = document.createElement("img");
+          overlayImg.src = img.src;
+          overlayImg.alt = img.alt || "Photo";
+          overlayImg.className = "max-w-[90vw] max-h-[90vh] object-contain";
+
+          function closeOverlay() {
+            overlay.remove();
+            item.focus();
+          }
+
+          closeBtn.addEventListener("click", closeOverlay);
+          overlay.addEventListener("click", (e) => { if (e.target === overlay) closeOverlay(); });
+          overlay.addEventListener("keydown", (e) => { if (e.key === "Escape") closeOverlay(); });
+
+          overlay.appendChild(overlayImg);
+          overlay.appendChild(closeBtn);
+          overlay.setAttribute("tabindex", "-1");
+          document.body.appendChild(overlay);
+          overlay.focus();
+
+          gsap.fromTo(overlay, { opacity: 0 }, { opacity: 1, duration: 0.3 });
+        });
+
+        item.addEventListener("keydown", function(e) {
+          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); this.click(); }
+        });
+      });
+    }
+
+    function initScrollReveals() {
+      document.querySelectorAll(".reveal, .reveal-left, .reveal-right, .reveal-scale").forEach((el) => {
+        const config = { opacity: 0, duration: 0.8, ease: "power2.out" };
+        if (el.classList.contains("reveal-left")) config.x = -40;
+        else if (el.classList.contains("reveal-right")) config.x = 40;
+        else if (el.classList.contains("reveal-scale")) { config.scale = 0.9; config.y = 0; }
+        else config.y = 30;
+
+        const endConfig = { opacity: 1, duration: 0.8, ease: "power2.out" };
+        if (el.classList.contains("reveal-left") || el.classList.contains("reveal-right")) endConfig.x = 0;
+        else if (el.classList.contains("reveal-scale")) endConfig.scale = 1;
+        else endConfig.y = 0;
+
+        gsap.fromTo(el, config, {
+          ...endConfig,
+          scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none reverse" },
+        });
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      await initLoader();
+      initSmoothScroll();
+      initNavScroll();
+      initScrollIndicator();
+      initParallax();
+      initStatsCounter();
+      initMenuFilter();
+      initTestimonialSlider();
+      initGallery();
+      initScrollReveals();
+    });
+  </script>
+</BaseLayout>

@@ -1,0 +1,54 @@
+---
+import { reviews } from "../data/reviews";
+
+const totalRating = reviews.reduce((sum, r) => sum + r.rating, 0);
+const avgRating = (totalRating / reviews.length).toFixed(1);
+const reviewCount = reviews.length;
+---
+
+<section id="reviews" class="section-padding relative overflow-hidden">
+  <div class="container-cafe">
+    <div class="text-center mb-12 reveal">
+      <span class="section-label">Testimonials</span>
+      <h2 class="section-title">
+        What Our <span class="text-gradient">Guests Say</span>
+      </h2>
+      <div class="flex items-center justify-center gap-2 mb-2">
+        <span class="text-3xl text-gold" aria-hidden="true">★</span>
+        <span class="text-2xl font-heading font-bold text-cream">{avgRating}/5</span>
+        <span class="text-muted text-sm">| {reviewCount}+ Reviews</span>
+      </div>
+    </div>
+
+    <div class="relative max-w-3xl mx-auto reveal" role="region" aria-label="Customer reviews carousel" aria-roledescription="carousel">
+      <div class="overflow-hidden">
+        <div class="testimonial-track flex transition-none" aria-live="polite">
+          {reviews.map((review) => (
+            <div class="testimonial-card min-w-full px-4" role="group" aria-roledescription="slide" aria-label={`Review by ${review.name}`}>
+              <div class="glass-card p-8 text-center">
+                <div class="w-16 h-16 mx-auto mb-4 rounded-full overflow-hidden bg-surface-light">
+                  <img src={review.avatar} alt={review.name} class="w-full h-full object-cover" loading="lazy" decoding="async" width="200" height="200" />
+                </div>
+                <div class="flex justify-center gap-1 mb-4" aria-label={`${review.rating} out of 5 stars`}>
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <span class={`text-lg ${i < review.rating ? "text-gold" : "text-surface-light"}`} aria-hidden="true">★</span>
+                  ))}
+                </div>
+                <p class="text-cream/80 leading-relaxed mb-6 italic">&ldquo;{review.text}&rdquo;</p>
+                <h4 class="font-heading text-lg font-semibold text-cream">{review.name}</h4>
+                <p class="text-sm text-muted">{review.role}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <button class="testimonial-prev absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-10 h-10 rounded-full glass flex items-center justify-center text-cream hover:text-gold transition-colors focus:outline-none focus:ring-2 focus:ring-gold/50" aria-label="Previous review">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+      </button>
+      <button class="testimonial-next absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-10 h-10 rounded-full glass flex items-center justify-center text-cream hover:text-gold transition-colors focus:outline-none focus:ring-2 focus:ring-gold/50" aria-label="Next review">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
+</section>

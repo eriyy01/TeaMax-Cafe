@@ -1,0 +1,45 @@
+---
+const images = [
+  { src: "/images/gallery/gallery-1.jpg", alt: "Café interior with warm lighting", w: 800, h: 1000 },
+  { src: "/images/gallery/gallery-2.jpg", alt: "Barista pouring latte art", w: 600, h: 800 },
+  { src: "/images/gallery/gallery-3.jpg", alt: "Coffee and dessert on table", w: 800, h: 900 },
+  { src: "/images/gallery/gallery-4.jpg", alt: "Friends enjoying at café", w: 600, h: 1000 },
+  { src: "/images/gallery/gallery-5.jpg", alt: "Tea being brewed", w: 800, h: 800 },
+  { src: "/images/gallery/gallery-6.jpg", alt: "Café exterior at dusk", w: 600, h: 600 },
+];
+---
+
+<section id="gallery" class="section-padding relative">
+  <div class="container-cafe">
+    <div class="text-center mb-12 reveal">
+      <span class="section-label">Gallery</span>
+      <h2 class="section-title">
+        Moments at <span class="text-gradient">TeaMax</span>
+      </h2>
+      <p class="section-subtitle mx-auto">
+        Every corner tells a story. Browse through moments captured at our café.
+      </p>
+    </div>
+
+    <ul class="columns-2 sm:columns-3 gap-4 reveal" aria-label="Photo gallery">
+      {images.map((img) => (
+        <li class="gallery-item break-inside-avoid mb-4 rounded-xl overflow-hidden cursor-pointer group relative">
+          <img
+            src={img.src}
+            alt={img.alt}
+            class="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
+            loading="lazy"
+            decoding="async"
+            width={img.w}
+            height={img.h}
+          />
+          <div class="absolute inset-0 bg-warm-black/0 group-hover:bg-warm-black/40 transition-all duration-300 flex items-center justify-center" aria-hidden="true">
+            <svg class="text-cream opacity-0 group-hover:opacity-100 transition-all duration-300 w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

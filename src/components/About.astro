@@ -1,0 +1,61 @@
+---
+const stats = [
+  { label: "Years of Service", value: 5, suffix: "+" },
+  { label: "Happy Customers", value: 15000, suffix: "+" },
+  { label: "Menu Items", value: 60, suffix: "+" },
+  { label: "Positive Reviews", value: 100, suffix: "+" },
+];
+---
+
+<section id="about" class="section-padding relative overflow-hidden">
+  <div class="container-cafe">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+      <div class="reveal-left">
+        <span class="section-label">Our Story</span>
+        <h2 class="section-title">
+          More Than Just
+          <br />
+          <span class="text-gradient">A Cup of Tea</span>
+        </h2>
+        <p class="section-subtitle mb-6">
+          TeaMax Cafe Bilaspur was born from a simple belief — that great conversations deserve the perfect cup of tea.
+          What started as a dream to create a warm, welcoming space in the heart of Bilaspur has grown into
+          a beloved destination for tea lovers, coffee enthusiasts, foodies, and friends.
+        </p>
+        <p class="text-muted leading-relaxed mb-8">
+          Every drink we serve is crafted with care, every dish prepared with fresh ingredients,
+          and every guest welcomed like family. Our space is designed for connection — whether
+          you're catching up with friends, working on a project, enjoying a date, or celebrating life's moments.
+        </p>
+        <a href="#menu" class="btn-primary">Discover Our Menu</a>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4 reveal-right">
+        <div class="glass-card p-6 text-center">
+          <div class="text-3xl md:text-4xl font-heading font-bold text-gradient mb-2">
+            <span class="stat-number" data-target={stats[0].value}>0</span>{stats[0].suffix}
+          </div>
+          <p class="text-sm text-muted">{stats[0].label}</p>
+        </div>
+        <div class="glass-card p-6 text-center">
+          <div class="text-3xl md:text-4xl font-heading font-bold text-gradient mb-2">
+            <span class="stat-number" data-target={stats[1].value}>0</span>{stats[1].suffix}
+          </div>
+          <p class="text-sm text-muted">{stats[1].label}</p>
+        </div>
+        <div class="glass-card p-6 text-center">
+          <div class="text-3xl md:text-4xl font-heading font-bold text-gradient mb-2">
+            <span class="stat-number" data-target={stats[2].value}>0</span>{stats[2].suffix}
+          </div>
+          <p class="text-sm text-muted">{stats[2].label}</p>
+        </div>
+        <div class="glass-card p-6 text-center">
+          <div class="text-3xl md:text-4xl font-heading font-bold text-gradient mb-2">
+            <span class="stat-number" data-target={stats[3].value}>0</span>{stats[3].suffix}
+          </div>
+          <p class="text-sm text-muted">{stats[3].label}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
